@@ -4,14 +4,20 @@ using Alura.ByteBank.Dominio.Interfaces.Repositorios;
 using Aula.ByteBank.Infraestrutura.Testes.Servico;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
+using Xunit.Abstractions;
 
 namespace Aula.ByteBank.Infraestrutura.Testes
 {
     public  class AgenciaRepositorioTestes
     {
         private readonly IAgenciaRepositorio _agenciaRepositorio;
-        public AgenciaRepositorioTestes() 
+        public ITestOutputHelper SaidaConsoleTeste { get; set; }
+
+        public AgenciaRepositorioTestes(ITestOutputHelper saidaConsoleTeste) 
         {
+            SaidaConsoleTeste = saidaConsoleTeste;
+            SaidaConsoleTeste.WriteLine("Construtor executado");
+
             var servico = new ServiceCollection();
             servico.AddTransient<IAgenciaRepositorio, AgenciaRepositorio>();
             var provedor = servico.BuildServiceProvider();
@@ -26,7 +32,7 @@ namespace Aula.ByteBank.Infraestrutura.Testes
 
             //Assert
             Assert.NotNull(lista);
-            Assert.Equal(3, lista.Count);
+            Assert.Equal(2, lista.Count);
         }
 
         [Fact]
@@ -60,7 +66,7 @@ namespace Aula.ByteBank.Infraestrutura.Testes
         {
             //Arrange
             //Act
-            var atualizado = _agenciaRepositorio.Excluir(3);
+            var atualizado = _agenciaRepositorio.Excluir(2);
 
             //Assert
             Assert.True(atualizado);
@@ -70,7 +76,7 @@ namespace Aula.ByteBank.Infraestrutura.Testes
         [Fact]
         public void TestaExecaoConsultÀgenciaPorId()
         {
-            Assert.Throws<FormatException>( () => _agenciaRepositorio.ObterPorId(33));
+            Assert.Throws<Exception>( () => _agenciaRepositorio.ObterPorId(33));
         }
 
         [Fact]

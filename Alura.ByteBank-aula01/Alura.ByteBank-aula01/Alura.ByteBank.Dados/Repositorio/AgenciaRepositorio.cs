@@ -75,13 +75,13 @@ namespace Alura.ByteBank.Dados.Repositorio
                 var agencia = _contexto.Agencias.FirstOrDefault(p => p.Id == id);
                 if(agencia == null)
                 {
-                    throw new FormatException($"Erro ao obter agência com Id = {id}.");
+                    throw new Exception($"Erro ao obter agência com Id = {id}.");
                 }
                 return agencia;
             }
-            catch (FormatException ex)
+            catch 
             {
-               throw new FormatException($"Erro ao obter uma agência = {ex.Message}.") ;
+               throw new Exception($"Erro ao obter agência com Id = {id}.") ;
             }
         }
 
